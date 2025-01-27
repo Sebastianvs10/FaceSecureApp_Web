@@ -1,0 +1,785 @@
+/* Reseteo básico para márgenes y paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Asegura que body ocupe toda la pantalla y no tenga margen */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: url('/images/backgrounda.jpg') no-repeat center center fixed;
+  background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #010828;
+  position: relative;
+  overflow: hidden;
+}
+
+#sidebar {
+    position: fixed;
+    left: -200px; /* Está fuera de la vista por defecto */
+    top: 50px;
+    width: 200px;
+    height: 100vh;
+    background-color: rgba(51, 51, 51, 0.58);
+    color: white;
+    z-index: 10; /* Asegura que el sidebar esté sobre el contenido */
+    transition: left 0.3s ease;
+}
+
+#sidebar a {
+    display: block;
+    padding: 10px;
+    margin: 15px 0;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#sidebar a:hover {
+    background-color: rgba(0, 0, 0, 0.56);
+}
+
+h2 {
+    margin-bottom: 1.25rem; /* Usar unidades relativas */
+    color: white;
+}
+h3 {
+    color: #ffffff;
+    margin-left: 4px;
+    margin-bottom: 0;
+}
+
+h4 {
+    color: #ffffff;
+    margin-left: 4px;
+    margin-bottom: 0;
+}
+label{
+    color: #ffffff;
+    margin-left: 4px;
+    margin-bottom: 0;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem; /* Usar unidades relativas */
+}
+
+input[type="text"],
+input[type="password"],input[type="email"]  {
+    padding: 0.625rem; /* Usar unidades relativas */
+    border: none;
+    border-radius: 0.3125rem; /* Usar unidades relativas */
+    font-size: 1rem; /* Usar unidades relativas */
+}
+
+input[type="submit"] {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    padding: 0.625rem; /* Usar unidades relativas */
+    border: none;
+    border-radius: 0.3125rem; /* Usar unidades relativas */
+    background-color: #31aa16;
+    color: white;
+    font-size: 1rem; /* Usar unidades relativas */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+input[type="submit"]:hover {
+    background-color: #27910e; /* Cambiar color al hacer hover */
+}
+
+video {
+    border-radius: 50%;
+    width: 18.75rem; /* Usar unidades relativas */
+    height: 18.75rem; /* Usar unidades relativas */
+    object-fit: cover;
+    border: 0.125rem solid #333; /* Usar unidades relativas */
+}
+
+.container-grid {
+    display: grid; /* Usando Grid Layout */
+    grid-template-columns: 60% 40%; /* Dividir en 60% y 40% */
+    height: 100vh; /* Altura completa del viewport */
+    width: 100vw; /* Ancho completo del viewport */
+    overflow: hidden; /* Evitar scroll innecesario */
+}
+.container-grid-login {
+    display: grid; /* Usando Grid Layout */
+    height: 100vh; /* Altura completa del viewport */
+    width: 150vw; /* Ancho completo del viewport */
+    overflow: hidden; /* Evitar scroll innecesario */
+}
+
+.image-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border-radius: 1vh; /* Borde redondeado del contenedor */
+    padding: 2vh; /* Espacio alrededor del contenido */
+}
+
+.image-section img {
+     border-radius: 5vh; /* Borde redondeado del GIF */
+    margin: 10px; /* Margen alrededor del GIF */
+    width: 100%;
+    height: auto; /* Mantiene la proporción del GIF */
+    object-fit: cover; /* Imagen cubre todo el contenedor */
+}
+
+.form-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem; /* Usar unidades relativas */
+    height: 100%;
+    width: 100%;
+}
+
+.form-container {
+    background: rgba(26, 26, 26, 0.73); /* Fondo semi-transparente */
+    border-radius: 1rem; /* Usar unidades relativas */
+    padding: 3.25rem; /* Usar unidades relativas */
+    width: 100%;
+    max-width: 25rem; /* Usar unidades relativas */
+    text-align: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.45); /* Fondo semi-transparente */
+    border-radius: 1rem; /* Usar unidades relativas */
+    padding: 4rem; /* Aumentar el padding para más espacio interno */
+    width: 100%; /* Usar un porcentaje para que se adapte mejor a diferentes pantallas */
+    max-width: 00px; /* Un ancho máximo para mantener la estética */
+    text-align: center;
+    z-index: 1;
+    margin: 100px auto; /* Centramos el contenedor y mantenemos espacio arriba */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transition: margin-left 0.3s;
+    overflow-y: auto; /* Agrega desplazamiento si es necesario */
+    min-height: 500px; /* Altura mínima para mantener el tamaño consistente */
+    max-height: 800px; /* Altura máxima para evitar que se expanda más de lo necesario */
+}
+.btn-primary, .btn-outline {
+    width: 90%; /* Ajusta el ancho del botón */
+    padding: 0.625rem; /* Usar unidades relativas */
+    font-size: 1rem; /* Usar unidades relativas */
+    margin: 1.15rem auto; /* Centra horizontalmente con auto */
+    cursor: pointer;
+    border-radius: 0.3125rem; /* Usar unidades relativas */
+    transition: background-color 0.3s ease; /* Transición suave */
+    display: block; /* Asegura que el botón se comporte como un bloque */
+}
+
+
+.btn-primary {
+    background-color: #05b913;
+    font-weight: bold;
+    color: #000d4b;
+    border: none;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #007bff;
+    border: 0.0625rem solid #007bff; /* Usar unidades relativas */
+    margin-top: 0.625rem; /* Usar unidades relativas */
+}
+
+.btn-outline:hover {
+    background-color: #007bff;
+    color: white;
+}
+.hidden {
+    display: none;
+}
+.buttonOut {
+    color: brown;
+}
+
+.link_register {
+    color: #60d711; /* Color del texto */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+
+    font-size: 16px; /* Opcional: cambia el tamaño de la fuente */
+}
+
+.link_register:hover {
+    color: #d24410; /* Cambia el color del texto cuando se pasa el ratón */
+}
+
+/* REGISTER FACE */
+.tab-content {
+    display: none;
+}
+.tab-active {
+    display: block;
+}
+.oval-camera {
+    width: 100%;
+    height: 350px; /* Ajusta la altura según lo necesites */
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 20px 0;
+    position: relative;
+    display: flex; /* Usar flexbox */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+}
+video {
+    z-index: 1; /* El video debe estar debajo del canvas */
+}
+canvas {
+    z-index: 2; /* El canvas debe estar encima del video */
+}
+.button_next{
+    background-color: #d24410;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 1vh;
+    height: 5vh;
+    margin-top: 2vh;
+}
+.buttonOut{
+    background: #d24410;
+    font-weight: bold;
+    color: white;
+    border-radius: 1vh;
+}
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; /* Ocultar por defecto */
+    min-width: 200px;
+    padding: 10px;
+    background-color: #eea5ab; /* Color de fondo de advertencia */
+    color: #4b0000; /* Color del texto */
+    border: 1px solid #eea5ab; /* Bordes */
+    border-radius: 5px;
+    z-index: 1050; /* Asegurarse de que esté por encima de otros elementos */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.notification.success {
+    background-color: #c2eccb; /* Color de fondo verde */
+    color: #125923; /* Color del texto para éxito */
+    border: 1px solid #7b9180; /* Bordes para éxito */
+}
+
+.notification .close {
+    background: transparent; /* Fondo transparente */
+    border: none; /* Sin bordes */
+    color: #000000; /* Mismo color que el borde */
+    font-size: 20px; /* Ajusta el tamaño del icono */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    padding: 0; /* Sin padding */
+}
+
+.notification .close:hover {
+    color: #721c24; /* Color al pasar el mouse */
+}
+
+/*DASHBOARD*/
+
+header {
+    background: rgba(26, 26, 26, 0.7);
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between; /* Alinea elementos en los extremos */
+    align-items: center; /* Centra verticalmente */
+    min-height: 40px; /* Asegura un mínimo de altura */
+}
+nav {
+    background-color: rgba(0, 0, 0, 0.56);
+    width: 200px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    height: calc(100vh - 60px); /* Ajusta la altura del menú */
+    position: fixed;
+    top: 60px;
+    left: -200px;
+    transition: left 0.3s;
+    overflow-y: auto;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+}
+nav a {
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    text-decoration: none;
+    color: #007bff;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+nav a:hover {
+    background-color: #f0f0f0;
+}
+.container {
+    background: rgba(118, 118, 128, 0.73); /* Fondo semi-transparente */
+    border-radius: 10px;
+    padding: 4rem; /* Aumentar el padding para más espacio interno */
+    width: 200%; /* Usar un porcentaje para que se adapte mejor a diferentes pantallas */
+    max-width: 1000px; /* Un ancho máximo para mantener la estética */
+    text-align: center;
+    z-index: 1;
+    margin: 100px auto; /* Centramos el contenedor y mantenemos espacio arriba */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transition: margin-left 0.3s;
+    overflow-y: auto; /* Agrega desplazamiento si es necesario */
+}
+
+.welcome-message {
+    text-align: center;
+    font-size: 20px;
+    color: #000d4b;
+}
+.user-code {
+    text-align: center;
+    font-size: 18px;
+    color: #d24410;
+    margin-top: 20px;
+}
+
+
+.user-info {
+    font-size: 16px;
+    text-align: center;
+    margin-right: 5vh; /* Espacio entre el menú y el nombre de usuario */
+    white-space: nowrap; /* Evita que el texto se divida */
+    overflow: hidden; /* Oculta el texto que no cabe */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos para el texto desbordado */
+}
+
+.role-info {
+    font-size: 0.8em; /* Tamaño de fuente más pequeño */
+    color: #ccc; /* Un color más claro para diferenciar */
+}
+.logout-button {
+    background: transparent;
+    border: none;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.logout-button:hover {
+    color: #ff0000; /* Cambia el color al pasar el ratón */
+}
+
+.logout-icon {
+    margin-right: 5px; /* Espacio entre el ícono y el texto */
+}
+
+.logout-button:focus {
+    outline: none; /* Elimina el contorno del botón al hacer clic */
+}
+
+/* ADMINISTRACION USUARIOS */
+/* General table styles */
+table {
+    width: 100%;
+    background: white; /* Fondo blanco */
+    border-collapse: collapse;
+    border-radius: 10px;
+    font-family: 'Arial', sans-serif; /* Cambia la fuente si deseas */
+    overflow: hidden;
+    table-layout: fixed; /* Esto asegura que las celdas de la tabla no cambien de tamaño */
+}
+
+/* Border and spacing */
+table, th, td {
+    border: none; /* Eliminar borde por defecto */
+    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho disponible */
+}
+
+th, td {
+    padding: 12px; /* Mayor padding para más espacio */
+    text-align: center;
+    color: #000; /* Color del texto negro */
+    word-wrap: break-word; /* Evita desbordamientos por contenido largo */
+}
+
+
+th {
+    background-color: #0710bd; /* Color de fondo de los encabezados */
+    color: #fff; /* Texto blanco en encabezados */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+tr:nth-child(even) {
+    background-color: rgba(10, 82, 154, 0.1); /* Fondo alternativo para filas pares */
+}
+
+tr:hover {
+    background-color: rgba(5, 78, 148, 0.3); /* Efecto hover más dinámico */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Ajustar columnas para mayor control de espacio */
+th, td {
+    min-width: 70px; /* Asegura que cada columna tenga un ancho mínimo */
+}
+
+
+
+.toggle-menu {
+    cursor: pointer;
+    color: #ffffff; /* Color del texto para el botón */
+    font-size: 20px;
+    transition: color 0.3s ease; /* Transición para color */
+}
+
+.toggle-menu:hover {
+    color: #ffffff; /* Cambiar color al pasar el ratón */
+}
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.56);
+    border-radius: 10px;
+    max-width: 800px; /* Máximo ancho para pantallas grandes */
+    padding: 20px; /* Espaciado interno */
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s;
+    display: flex; /* Usar flexbox */
+    flex-direction: column; /* Colocar los elementos en columna */
+    align-items: center; /* Centrar elementos horizontalmente */
+}
+.modal-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-left {
+    flex: 1;
+    max-width: 60vh;
+    margin-right: 20px; /* Espacio entre columnas */
+}
+
+.modal-right {
+    max-height: 460px; /* Ajusta este valor según tus necesidades */
+    overflow-y: auto;  /* Habilita el scroll vertical */
+    padding-right: 10px; /* Para evitar que el contenido se pegue al borde */
+    max-width: 60vh; /* Limitar el ancho de la sección de trazabilidad */
+}
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+}
+
+.modal-field {
+    margin-bottom: 15px; /* Espacio entre campos */
+    color: white;
+    align-content: center;
+}
+
+.modal-field {
+    margin-bottom: 15px; /* Espacio entre campos */
+}
+
+.modal-text {
+    width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
+    padding: 10px; /* Aumenta el padding interno para inputs */
+    font-size: 16px; /* Tamaño de fuente más grande */
+}
+
+.modal-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.modal-button {
+
+    background-color: #0a529a;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.modal-button:hover {
+    background-color: #d24410;
+}
+
+/* Animación para el modal */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; } /* Corregido a 1 para una animación más adecuada */
+}
+
+
+/* Menú lateral */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px; /* Ancho inicial para solo ver los íconos */
+  height: 100%;
+  background-color: rgba(51, 51, 51, 0.64);
+  transition: width 0.3s ease; /* Transición suave cuando cambia el tamaño */
+  padding-top: 50px;
+}
+
+#sidebar.open {
+  width: 250px; /* Ancho completo cuando está abierto */
+}
+
+#sidebar .sidebar-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: flex-start;
+}
+
+#sidebar a {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 15px;
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  transition: padding-left 0.3s ease;
+}
+
+#sidebar a:hover {
+  background-color: rgba(232, 80, 25, 0.98);
+}
+
+#sidebar .fa-solid {
+  font-size: 20px;
+  margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+#sidebar:not(.open) a span {
+  display: none; /* Oculta el texto cuando el sidebar está comprimido */
+}
+
+#sidebar.open a span {
+  display: inline; /* Muestra el texto cuando el sidebar está abierto */
+}
+
+#sidebar a {
+  justify-content: flex-start; /* Alinea el ícono a la izquierda */
+}
+
+#sidebar .toggle-menu {
+  font-size: 30px;
+  color: rgba(0, 0, 0, 0.56);
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/*Header Perfil*/
+/* Estilo para las iniciales */
+.initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #4CAF50; /* Fondo verde */
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.initials:hover {
+  background-color: #45a049; /* Color ligeramente más oscuro cuando se pasa el cursor */
+}
+
+/* Estilos para el dropdown */
+.dropdown {
+  position: absolute;
+  top: 50px; /* Ajusta según sea necesario */
+  right: 0;
+  background-color: rgba(179, 184, 204, 0.57);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 300px;
+  z-index: 10; /* Asegurarse de que el dropdown quede por encima de otros elementos */
+}
+
+.dropdown p {
+  margin: 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dropdown a {
+  display: block;
+  padding: 8px 0;
+  text-decoration: none;
+  color: #000d4b;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.dropdown a:hover {
+  background-color: #adaaaa;
+}
+
+/*Account User*/
+.account-user.container {
+  background: rgba(255, 255, 255, 0.45); /* Fondo semi-transparente */
+    border-radius: 1rem; /* Usar unidades relativas */
+    width: 100%; /* Usar un porcentaje para que se adapte mejor a diferentes pantallas */
+    max-width: 100%; /* Un ancho máximo para mantener la estética */
+    text-align: center;
+    z-index: 1;
+    margin: 100px auto; /* Centramos el contenedor y mantenemos espacio arriba */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    transition: margin-left 0.3s;
+    overflow-y: hidden; /* Agrega desplazamiento si es necesario */
+}
+
+.profile-info {
+  margin-top: 20px;
+}
+
+.profile-field {
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal-text {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.image-container {
+  margin-top: 10px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-field input[readonly] {
+  background-color: #e9e9e9;
+}
+
+.profile-field input[type="password"]:not([readonly]) {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
+
+.profile-field input:focus {
+  outline: none;
+  border: 1px solid #007bff;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;  /* Alinea la paginación a la derecha */
+  align-items: center;  /* Alinea verticalmente los elementos */
+  gap: 10px;  /* Espaciado entre los elementos de la paginación */
+  padding: 10px 0;  /* Opcional: Agregar espacio superior e inferior */
+}
+
+.btn-pagination {
+  width: 5%; /* Ajusta el ancho del botón */
+    padding: 0.625rem; /* Usar unidades relativas */
+    font-size: 1rem; /* Usar unidades relativas */
+    margin: 1.15rem auto; /* Centra horizontalmente con auto */
+    cursor: pointer;
+    border-radius: 0.9rem; /* Usar unidades relativas */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.btn-pagination:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+span {
+  font-size: 18px;
+  font-weight: bold;
+    color: rgba(0, 0, 0, 0.56);
+}
+

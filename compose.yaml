@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: db
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=appfacesecure
+    ports:
+      - "5433:5433"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  backend:
+    container_name: backend
+    build: ./backend
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5433/appfacesecure
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "wait-for-it db:5433 -- python manage.py migrate && python manage.py makemigrations && python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+      - 5173:5173
+    environment:
+      - VITE_API_URL=http://0.0.0.0:8000/
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
