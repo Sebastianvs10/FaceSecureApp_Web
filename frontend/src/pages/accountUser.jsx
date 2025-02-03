@@ -119,19 +119,19 @@ const AccountUser = () => {
             <input type="text" id="modalUserName" className="modal-text" value={name_user} readOnly />
           </div>
           <div className="profile-field">
-            <label htmlFor="modalUserName">Usuario:</label>
+            <strong htmlFor="modalUserName">Usuario:</strong>
             <input type="text" id="modalUserName" className="modal-text" value={username} readOnly />
           </div>
           <div className="profile-field">
-            <label htmlFor="modalUserCode">Código de Usuario:</label>
+            <strong htmlFor="modalUserCode">Código de Usuario:</strong>
             <input type="text" id="modalUserCode" className="modal-text" value={user_code} readOnly />
           </div>
           <div className="profile-field">
-            <label htmlFor="modalUserRole">Rol:</label>
+            <strong htmlFor="modalUserRole">Rol:</strong>
             <input type="text" id="modalUserRole" className="modal-text" value={role} readOnly />
           </div>
           <div className="profile-field">
-            <label htmlFor="modalUserEmail">Correo Electrónico:</label>
+            <strong htmlFor="modalUserEmail">Correo Electrónico:</strong>
             <input type="email" id="modalUserEmail" className="modal-text" value={email} readOnly />
           </div>
         </div>

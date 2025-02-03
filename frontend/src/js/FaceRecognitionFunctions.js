@@ -354,18 +354,30 @@ export const validateAndNext = async () => {
       console.log(data);
 
       if (data.exists) {
-        return true; // Si el usuario está registrado, retornar true
+        return {success: true, message: ''}; // Si el usuario está registrado, retornar true
       } else {
         blinkMessageError.textContent = 'El usuario no está registrado.';
         blinkMessageError.style.color = 'red';
-        return false; // Si el usuario no está registrado, retornar false
+        return {success: false, message: 'El usuario no está registrado.'}; // Si el usuario no está registrado, retornar false
       }
     } catch (error) {
       console.error('Error al verificar el usuario:', error);
-      return false; // En caso de error, retornar false
+
+      if (error.name === 'TypeError' && error.message.includes('NetworkError')) {
+        // Verifica si el error es un error de red
+        blinkMessageError.textContent = 'No se puede conectar al servidor. Verifica tu conexión a internet.';
+        blinkMessageError.style.color = 'red';
+        return {success: false, message: 'No hay conexión con el servidor. Verifica tu red.'}; // Error de conexión
+      }
+
+      // Otro tipo de error (por ejemplo, servidor caído)
+      blinkMessageError.textContent = 'Error al verificar el usuario. Intenta nuevamente más tarde.';
+      blinkMessageError.style.color = 'red';
+      return {success: false, message: 'Error al verificar el usuario. Intenta nuevamente más tarde.'}; // Error genérico
     }
   }
 };
+
 
 
 

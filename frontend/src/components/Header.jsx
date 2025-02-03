@@ -53,11 +53,11 @@ const Header = ({ name_user, role, onLogout, onToggleSidebar }) => {
             <br/>
             <a href="/account">
               <i className="fa-solid fa-user-gear" style={{ color: '#e6410a', fontSize: '20px' }}></i>
-              Mi cuenta
+               Mi cuenta
             </a> {/* Opción de ver cuenta */}
             <a onClick={onLogout}>
               <i className="fa-solid fa-right-from-bracket" style={{color: '#ff0000', fontSize: '20px'}}></i>
-              Cerrar sesión
+               Cerrar sesión
             </a> {/* Opción de cerrar sesión */}
           </div>
         )}

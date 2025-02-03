@@ -15,13 +15,13 @@ export default function Login() {
   // Cambiar a la siguiente pestaña y ejecutar la validación
   const nextTab = async () => {
     const isValid = await validateAndNext(); // Llamar a la función de validación y esperar el resultado
-    console.log(isValid);
+    console.log(isValid.success);
 
-    if (isValid) { // Solo cambiar a la siguiente pestaña si la validación es exitosa
+    if (isValid.success) { // Solo cambiar a la siguiente pestaña si la validación es exitosa
       setActiveTab(2); // Cambiar a la segunda pestaña
       initializeCamera(); // Inicializar la cámara
     } else {
-      toast.error('Validación fallida.', error);
+      toast.error(isValid.message);
     }
   };
 

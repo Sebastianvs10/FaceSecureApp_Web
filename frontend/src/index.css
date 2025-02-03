@@ -684,7 +684,7 @@ th, td {
 
 /*Account User*/
 .account-user.container {
-  background: rgba(255, 255, 255, 0.45); /* Fondo semi-transparente */
+  background: rgba(26, 26, 26, 0.44); /* Fondo semi-transparente */
     border-radius: 1rem; /* Usar unidades relativas */
     width: 100%; /* Usar un porcentaje para que se adapte mejor a diferentes pantallas */
     max-width: 100%; /* Un ancho máximo para mantener la estética */
