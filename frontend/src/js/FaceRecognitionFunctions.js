@@ -72,7 +72,6 @@ function onResults(results) {
 
 // Función para inicializar la cámara
 export async function enableCamera() {
-  console.log("V, C", video, canvas)
   if (!video || !canvas) {
     console.error("El video o el canvas no están definidos correctamente.");
     return;
@@ -248,11 +247,9 @@ function captureImage() {
     user_code: document.querySelector('[name="user_code"]').value,
     face_data: dataURL, // Agregar la imagen en formato base64
   };
-  console.log(formData)
   // Enviar los datos a la API
   axios.post('http://127.0.0.1:8000/api/register/', formData)
   .then((response) => {
-    console.log('Formulario y imagen enviados con éxito:', response.data);
 
    // Redirigir al usuario después de 3 segundos (3000 milisegundos)
     setTimeout(() => {
@@ -298,7 +295,6 @@ function captureImageLogin() {
   // Enviar los datos a la API para login
   axios.post('http://127.0.0.1:8000/api/login/', formData)
     .then((response) => {
-      console.log('Formulario y imagen enviados con éxito:', response.data);
 
       // Guardar tokens en localStorage
       localStorage.setItem("accessToken", response.data.tokens.access);
@@ -325,7 +321,6 @@ function captureImageLogin() {
 // Función para validar el nombre de usuario y proceder al siguiente tab
 export const validateAndNext = async () => {
   const username = document.getElementById('username').value;
-  console.log(username);
   const blinkMessageError = document.getElementById('blinkMessageError');
 
   if (username.trim() === '') {
@@ -337,7 +332,6 @@ export const validateAndNext = async () => {
 
     // Obtener el token CSRF desde el meta tag
     const csrfToken = window.csrfToken;
-    console.log(csrfToken);
 
     try {
       // Hacer una solicitud AJAX para verificar el nombre de usuario
@@ -351,7 +345,6 @@ export const validateAndNext = async () => {
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (data.exists) {
         return {success: true, message: ''}; // Si el usuario está registrado, retornar true

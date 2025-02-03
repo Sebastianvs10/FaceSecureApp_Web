@@ -63,7 +63,6 @@ const AdminUsers = () => {
         headers: config.headers,
         params: { page: page, limit: 7 },
       });
-      console.log("user", response)
       // Verifica si la respuesta contiene 'results' y 'count'
       if (response.data.results && Array.isArray(response.data.results)) {
         setUsers(response.data.results);  // Establecer los usuarios de la página
@@ -84,7 +83,6 @@ const fetchUserInfo = (userId) => {
           toast.error(response.data.error);
         } else {
           setUserInfo(response.data);
-          console.log('User Info:', response.data);
         }
       })
       .catch(error => {
