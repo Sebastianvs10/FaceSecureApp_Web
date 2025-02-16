@@ -55,10 +55,10 @@ class UserLoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError("Credenciales Incorrectas!")
 
-class UsernameValidationSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=150)
+class EmailValidationSerializer(serializers.Serializer):
+    email = serializers.CharField(max_length=150)
 
-    def validate_username(self, value):
-        if CustomUser.objects.filter(username=value).exists():
+    def validate_email(self, value):
+        if CustomUser.objects.filter(email=value).exists():
             return value
         raise serializers.ValidationError('El usuario no está registrado.')

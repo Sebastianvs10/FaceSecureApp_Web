@@ -2,7 +2,9 @@ import os
 
 import numpy as np
 import cv2
+import re
 import datetime
+import resend
 from typing import List, Tuple, Any
 
 from django.utils import timezone
@@ -75,12 +77,23 @@ class FaceUtils:
         return face_image[yi:yf, xi:xf]
 
     # save
-    def save_face_data(self, face_crop: np.ndarray, user_code: str, username: str, name_user: str, password: str,
+
+
+
+    def save_face_data(self, face_crop: np.ndarray, user_code: str, name_user: str, password: str,
                        email: str) -> tuple:
         if face_crop is not None and face_crop.size > 0:
             # Convertir la imagen a formato binario
             _, buffer = cv2.imencode('.png', face_crop)  # Cambia el formato según necesites
             img_data = buffer.tobytes()
+
+            # Validación del correo electrónico
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+                return False, "El correo electrónico no es válido."
+
+            # Verificar si el correo ya está registrado
+            if CustomUser.objects.filter(email=email).exists():
+                return False, "Este correo electrónico ya está registrado."
 
             # Guardar en la base de datos
             try:
@@ -91,7 +104,7 @@ class FaceUtils:
 
                 # Crear un nuevo usuario
                 user = CustomUser(
-                    username=username,
+                    username=email,
                     email=email,
                     user_code=user_code,
                     name_user=name_user,
@@ -100,6 +113,95 @@ class FaceUtils:
                 )
                 user.full_clean()  # Verifica que los datos sean válidos antes de guardar
                 user.save()
+
+                # Enviar un correo de confirmación
+                params = {
+                    "from": "FaceSecure <onboarding@facesecure.online>",
+                    "to": [email],  # Usamos el correo del usuario registrado
+                    "subject": "Confirmación de registro",
+                    "html": f"""
+                    <html>
+                        <head>
+                            <style>
+                                body {{
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f4f4f4;
+                                    padding: 20px;
+                                }}
+                                .container {{
+                                    width: 100%;
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                    background-color: #ffffff;
+                                    padding: 20px;
+                                    border-radius: 8px;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                }}
+                                h1 {{
+                                    color: #333333;
+                                    text-align: center;
+                                }}
+                                p {{
+                                    font-size: 16px;
+                                    color: #555555;
+                                }}
+                                .user-info {{
+                                    background-color: #f9f9f9;
+                                    padding: 15px;
+                                    border-radius: 5px;
+                                    margin-top: 20px;
+                                }}
+                                .user-info p {{
+                                    margin: 5px 0;
+                                }}
+                                .logo {{
+                                    text-align: center;
+                                    margin-bottom: 20px;
+                                }}
+                                .logo img {{
+                                    width: 150px;
+                                    height: auto;
+                                }}
+                                .footer {{
+                                    text-align: center;
+                                    font-size: 14px;
+                                    color: #888888;
+                                    margin-top: 20px;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="logo">
+                                    <!-- Aquí pones la URL del logo que quieras mostrar -->
+                                    <img src="https://cdn-icons-png.flaticon.com/512/5972/5972778.png" alt="Logo de FaceSecure">
+                                </div>
+                                <h1>¡Bienvenido, {name_user}!</h1>
+                                <p>Gracias por registrarte en nuestro sistema FaceSecure. Tu cuenta ha sido creada con éxito.</p>
+
+                                <div class="user-info">
+                                    <h2>Detalles de tu cuenta</h2>
+                                    <p><strong>Nombre:</strong> {name_user}</p>
+                                    <p><strong>Código de usuario:</strong> {user_code}</p>
+                                    <p><strong>Email:</strong> {email}</p>
+                                </div>
+
+                                <div class="footer">
+                                    <p>Si tienes alguna duda, no dudes en contactarnos.</p>
+                                    <p>&copy; 2025 FaceSecure. Todos los derechos reservados.</p>
+                                </div>
+                            </div>
+                        </body>
+                    </html>
+                    """
+                }
+
+                # Configura la clave API de Resend
+                resend.api_key = "re_UMJQeZGM_Kq1WvnBDoEYHqTx7GjTpbZsc"
+                resend.ApiKeys.list()
+                # Enviar el correo
+                email_response = resend.Emails.send(params)
+                print(email_response)
 
                 # Si todo va bien, se retorna True con un mensaje de éxito
                 return True, "Usuario registrado exitosamente."
@@ -168,20 +270,20 @@ class FaceUtils:
         self.face_codes: List[str] = []  # Lista para almacenar códigos
 
         # Leer todos los usuarios desde la base de datos
-        users = CustomUser.objects.all().only('face_data', 'username', 'user_code', 'name_user')
+        users = CustomUser.objects.all().only('face_data', 'email', 'user_code', 'name_user')
         for user in users:
             # Convertir la imagen binaria a un formato que OpenCV pueda leer
             face_image = np.frombuffer(user.face_data, np.uint8)
             img_read = cv2.imdecode(face_image, cv2.IMREAD_COLOR)  # Decodificar imagen
             if img_read is not None:
                 self.face_db.append(img_read)
-                self.face_names.append(user.username)  # Almacenar el nombre del usuario
+                self.face_names.append(user.email)  # Almacenar el nombre del usuario
                 self.face_codes.append(user.user_code)  # Almacenar el código del usuario
                 self.names_user.append(user.name_user)  # Almacenar el código del usuario
         print(f'Base de datos de caras cargada con {len(self.face_db)} imágenes.')
         return self.face_db, self.face_names, self.names_user, self.face_codes, f'Comparing {len(self.face_db)} faces!'
 
-    def face_matching(self, current_face: np.ndarray, stored_face: np.ndarray, username: str) -> Tuple[
+    def face_matching(self, current_face: np.ndarray, stored_face: np.ndarray, email: str) -> Tuple[
         bool, str, float]:
         try:
             # Verificamos si las caras son válidas (no son None ni vacías)
@@ -200,7 +302,7 @@ class FaceUtils:
 
             # Si la comparación es positiva, retornamos la coincidencia
             if matching:
-                return True, username, distance
+                return True, email, distance
             else:
                 # Si no hay coincidencia, retornamos False
                 return False, '', 0.0
@@ -211,14 +313,14 @@ class FaceUtils:
             return False, '', 0.0
 
     def face_matching2(self, current_face: np.ndarray, face_db: List[np.ndarray], name_db: List[str]) -> Tuple[bool, str]:
-        username: str = ''
+        email: str = ''
         current_face = cv2.cvtColor(current_face, cv2.COLOR_RGB2BGR)
         for idx, face_img in enumerate(face_db):
             self.matching, self.distance = self.face_matcher.face_matching_facenet_model(current_face, face_img)
 
             if self.matching:
-                username = name_db[idx]
-                return self.matching, username
+                email = name_db[idx]
+                return self.matching, email
         return False, 'Face unknown'
 
     def check_in_user(self, email: str, distance: float):
@@ -229,8 +331,7 @@ class FaceUtils:
             return False, 'Error: distancia no proporcionada.'
 
         # Buscar al usuario por el email (USERNAME_FIELD es email en CustomUser)
-        user = CustomUser.objects.filter(username=email).first()
-
+        user = CustomUser.objects.filter(email=email).first()
         if user:  # Verifica si el usuario existe
             now = timezone.now()  # Obtener la hora actual
             success = True  # Asumimos que el acceso es exitoso
@@ -244,15 +345,15 @@ class FaceUtils:
                     ip_address='192.168.1.1',  # Obtener IP real si se pasa en la petición
                     distance=distance  # Asegúrate de que distance sea un número flotante
                 )
-                return True, f'Acceso concedido: {email}'
+                return True, user
             except Exception as e:
                 return False, f"Error al registrar acceso: {e}"
         else:
             return False, 'Acceso denegado: usuario no encontrado.'
 
-    def load_user_face_image(self, username):
+    def load_user_face_image(self, email):
         # Cargar la imagen almacenada desde la base de datos
-        user = CustomUser.objects.get(username=username)
+        user = CustomUser.objects.get(email=email)
         if user and user.face_data:  # Asegúrate de que haya datos en face_data
             # Convertir los datos de la imagen a bytes si es un memoryview
             face_data_bytes = user.face_data.tobytes() if isinstance(user.face_data, memoryview) else user.face_data
@@ -278,3 +379,4 @@ class FaceUtils:
     def decrypt_image(self, encrypted_data: bytes) -> bytes:
         """Método para desencriptar los datos de imagen."""
         return self.cipher.decrypt(encrypted_data)
+

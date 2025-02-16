@@ -44,6 +44,29 @@ class FaceMatcherModels:
         except:
             return False, 0.0
 
+    def detect_glasses(self, face_image: np.ndarray) -> bool:
+        # Utiliza el clasificador de OpenCV para detectar gafas
+        gray = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
+        glasses_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye_tree_eyeglasses.xml')
+
+        glasses = glasses_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+        if len(glasses) > 0:
+            return True  # Gafas detectadas
+        return False  # No se detectaron gafas
+
+    def remove_glasses_area(self, face_image: np.ndarray) -> np.ndarray:
+        gray = cv2.cvtColor(face_image, cv2.COLOR_BGR2GRAY)
+        glasses_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye_tree_eyeglasses.xml')
+
+        glasses = glasses_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+        for (x, y, w, h) in glasses:
+            # Puedes optar por borrar el área o difuminarla
+            face_image[y:y + h, x:x + w] = 0  # Borrar la zona de los ojos (puedes aplicar otro método como difuminar)
+
+        return face_image
+
     def face_matching_facenet_model(self, face_1: np.ndarray, face_2: np.ndarray) -> Tuple[bool, float]:
         try:
             # Verificar que las imágenes no estén vacías o sean nulas
@@ -58,6 +81,13 @@ class FaceMatcherModels:
             if self.is_dark_image(face_2):
                 face_2 = self.enhance_image(face_2)  # Mejorar la imagen solo si es oscura
 
+            # Detectar gafas en las imágenes y remover las áreas de los ojos si se detectan
+            if self.detect_glasses(face_1):
+                face_1 = self.remove_glasses_area(face_1)
+
+            if self.detect_glasses(face_2):
+                face_2 = self.remove_glasses_area(face_2)
+
             # Asegurarse de que las caras estén en formato RGB (DeepFace trabaja con RGB)
             if face_1.shape[2] == 3 and face_2.shape[2] == 3:  # Verificar que las imágenes tengan 3 canales (RGB)
                 face_1 = cv2.cvtColor(face_1, cv2.COLOR_BGR2RGB)
@@ -70,7 +100,7 @@ class FaceMatcherModels:
                 print(f"Redimensionando imagen 2 de {face_2.shape} a {face_1.shape}")
                 # Redimensionar la imagen de la cara 2 para que coincida con la cara 1
                 face_2 = cv2.resize(face_2, (face_1.shape[1], face_1.shape[0]))
-
+            print("PASO AQUI")
             # Usar DeepFace para verificar la similitud entre las dos caras
             result = DeepFace.verify(face_1, face_2, model_name=self.models[1])
 

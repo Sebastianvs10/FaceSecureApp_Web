@@ -32,12 +32,12 @@ class UserRegistrationAPIView(GenericAPIView):
         # Obtener los datos de la solicitud
         image_data = request.data.get('face_data')  # Asegúrate de que 'face_data' sea el campo enviado
         email = request.data.get('email')
-        username = request.data.get('username')
+        username = request.data.get('email')
         name_user = request.data.get('name_user')
         password = request.data.get('password')  # Suponiendo que usas 'password' para la contraseña
         user_code = request.data.get('user_code')
 
-        if not image_data or not username or not user_code or not name_user or not password:
+        if not image_data or not email or not user_code or not name_user or not password:
             return Response({'error': 'Faltan datos requeridos'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Procesar la imagen (base64 a imagen)
@@ -50,7 +50,7 @@ class UserRegistrationAPIView(GenericAPIView):
 
                 # Realiza cualquier preprocesamiento con la imagen (por ejemplo, FaceSignUp)
                 face_sign_up = FaceSignUp()
-                processed_img, save_image, info = face_sign_up.process(img, user_code, username, name_user, password, email)
+                processed_img, save_image, info = face_sign_up.process(img, user_code, name_user, password, email)
 
                 if not save_image:
                     return Response({'error': info}, status=status.HTTP_400_BAD_REQUEST)
@@ -68,12 +68,12 @@ class UserLoginAPIView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         # Primero, obtenemos los datos de la solicitud
-        username = request.data.get('username')
+        email = request.data.get('email')
         image_data = request.data.get('face_data')
 
         # Verificamos que ambos campos existan
-        if not username or not image_data:
-            return Response({"detail": "Username and image data are required."}, status=status.HTTP_400_BAD_REQUEST)
+        if not email or not image_data:
+            return Response({"detail": "Email and image data are required."}, status=status.HTTP_400_BAD_REQUEST)
 
         # Decodificar la imagen capturada
         format, imgstr = image_data.split(';base64,')
@@ -83,11 +83,11 @@ class UserLoginAPIView(GenericAPIView):
 
         # Procesar la imagen para comparar
         face_login = FaceLogIn()
-        processed_img, user_access, user_info = face_login.process(face_image, username)
+        processed_img, user_access, user_info = face_login.process(face_image, email)
 
         if user_access:
             # Si el acceso es válido, obtenemos el usuario desde la base de datos
-            user = CustomUser.objects.filter(username=username).first()
+            user = CustomUser.objects.filter(email=email).first()
             if not user:
                 return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -105,7 +105,7 @@ class UserLoginAPIView(GenericAPIView):
 
             # También guardamos información adicional en la sesión si es necesario
             request.session['user_code'] = user.user_code
-            request.session['username'] = user.username
+            request.session['username'] = user.email
             request.session['name_user'] = user.name_user
             request.session['distance'] = user_info.get('distance', None)  # Si se utiliza
             request.session['role'] = user.role
@@ -143,8 +143,8 @@ class UserInfoAPIView(RetrieveAPIView):
         return self.request.user
 
 @api_view(['POST'])
-def check_username(request):
-    serializer = UsernameValidationSerializer(data=request.data)
+def check_email(request):
+    serializer = EmailValidationSerializer(data=request.data)
     if serializer.is_valid():
         # Si el usuario existe, devolver respuesta positiva
         return JsonResponse({'exists': True})
@@ -201,7 +201,7 @@ def get_user_info(request, user_id):
 
         user_info = {
             'id': user.id,
-            'username': user.username,
+            'username': user.email,
             'user_code': user.user_code,
             'name_user': user.name_user,
             'role': user.role,

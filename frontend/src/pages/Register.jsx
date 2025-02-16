@@ -13,7 +13,8 @@ export default function Register() {
   });
 
   const [activeTab, setActiveTab] = useState(1);
-  const [blinkMessage] = useState('');
+  const [blinkMessage, setBlinkMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(''); // Para manejar el mensaje de error de contraseñas
 
   const handleChange = (e) => {
     setFormData({
@@ -23,7 +24,14 @@ export default function Register() {
   };
 
   const nextTab = () => {
+    // Verificar si las contraseñas coinciden
+    if (formData.password1 !== formData.password2) {
+      setPasswordError('Las contraseñas no coinciden. Intenta nuevamente.');
+      return; // No permite avanzar si las contraseñas no coinciden
+    }
 
+    // Si las contraseñas coinciden, continuar con el siguiente paso
+    setPasswordError(''); // Limpiar el mensaje de error
     setActiveTab(2);
     // Inicializar la cámara (esto asigna los elementos video y canvas globalmente)
     initializeCamera();
@@ -41,13 +49,25 @@ export default function Register() {
           <div id="blinkMessageContainer" style={{ color: 'red', marginBottom: '10px' }}>
             {blinkMessage} {/* El mensaje se actualiza dinámicamente */}
           </div>
+
+          {/* Mostrar mensaje de error de contraseñas */}
+          {passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
+
           <div id="tab1" className={`tab-content ${activeTab === 1 ? 'tab-active' : ''}`}>
             <form onSubmit={(e) => e.preventDefault()}> {/* Previene el envío tradicional del formulario */}
-              <label>Nombre de Usuario:</label>
+              <label>Nombre Completo:</label>
               <input
                 type="text"
-                name="username"
-                value={formData.username}
+                name="name_user"
+                value={formData.name_user}
+                onChange={handleChange}
+                required
+              />
+              <label>Identificación:</label>
+              <input
+                type="text"
+                name="user_code"
+                value={formData.user_code}
                 onChange={handleChange}
                 required
               />
@@ -75,24 +95,9 @@ export default function Register() {
                 onChange={handleChange}
                 required
               />
-              <label>Código de Usuario:</label>
-              <input
-                type="text"
-                name="user_code"
-                value={formData.user_code}
-                onChange={handleChange}
-                required
-              />
-              <label>Nombre Completo:</label>
-              <input
-                type="text"
-                name="name_user"
-                value={formData.name_user}
-                onChange={handleChange}
-                required
-              />
             </form>
           </div>
+
           <div id="tab2" className={`tab-content ${activeTab === 2 ? 'tab-active' : ''}`}>
             <h3 id="blinkMessage">Parpadea 3 veces para registrar tu rostro</h3>
             <div className="oval-camera">
@@ -100,6 +105,7 @@ export default function Register() {
               <canvas id="canvas"></canvas> {/* Referencia al canvas */}
             </div>
           </div>
+
           <div className="tab-buttons">
             {activeTab === 2 && (
               <button className="btn-primary" type="button" onClick={previousTab}>Anterior</button>

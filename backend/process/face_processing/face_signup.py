@@ -10,7 +10,7 @@ class FaceSignUp:
     def __init__(self):
         self.face_utilities = FaceUtils()
 
-    def process(self, face_image: np.ndarray, user_code: str, username_input: str, name_user_input: str, password: str, email: str) -> Tuple[np.ndarray, bool, str]:
+    def process(self, face_image: np.ndarray, user_code: str, name_user_input: str, password: str, email: str) -> Tuple[np.ndarray, bool, str]:
         # step 1: check face detection
         check_face_detect, face_info, face_save = self.face_utilities.check_face(face_image)
         if not check_face_detect:
@@ -41,13 +41,13 @@ class FaceSignUp:
             existing_faces, face_names, names_user, face_codes, _ = self.face_utilities.read_face_database()
 
             # Step 9: Check for identical faces
-            match_found, username = self.face_utilities.face_matching2(face_crop, existing_faces, face_names)
+            match_found, email = self.face_utilities.face_matching2(face_crop, existing_faces, face_names)
 
             if match_found:
-                return face_image, False, f'¡El rostro ya está registrado como {username}!'
+                return face_image, False, f'¡El rostro ya está registrado con el correo {email}!'
 
             # Step 10: Save face data
-            check_save_image, message = self.face_utilities.save_face_data(face_crop, user_code, username_input, name_user_input, password, email)
+            check_save_image, message = self.face_utilities.save_face_data(face_crop, user_code, name_user_input, password, email)
             if check_save_image:
                return face_image, check_save_image, '¡Rostro guardado!'
             else:

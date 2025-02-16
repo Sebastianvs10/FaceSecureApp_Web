@@ -139,7 +139,7 @@ export function detectBlink(landmarks) {
       lastBlinkTime = currentTime;
       isBlinking = true;
       if (blinkCount >= requiredBlinks) {
-        document.getElementById('blinkMessage').textContent = `Mira fijamente a la cámara`;
+        document.getElementById('blinkMessage').textContent = `Mira fijamente a la cámara y parpadea`;
         detectGaze(landmarks); // Iniciar la detección de mirada fija
       }
     }
@@ -240,7 +240,6 @@ function captureImage() {
 
   // Obtener los valores del formulario
   const formData = {
-    username: document.querySelector('[name="username"]').value,
     email: document.querySelector('[name="email"]').value,
     password: document.querySelector('[name="password1"]').value,
     name_user: document.querySelector('[name="name_user"]').value,
@@ -254,17 +253,16 @@ function captureImage() {
    // Redirigir al usuario después de 3 segundos (3000 milisegundos)
     setTimeout(() => {
       window.location.href = '/';  // Redirigir a la página de inicio
-    }, 3000);  // Retraso de 3 segundos
+    }, 2000);  // Retraso de 2 segundos
     toast.success('¡Usuario registrado exitosamente!');
   })
   .catch((error) => {
-    console.error('Error al enviar los datos:', error.response?.data || error);
-
+    console.error('Error al enviar los datos:' + error.response?.data?.error);
     // Redirigir al usuario después de 3 segundos si hay un error
     setTimeout(() => {
       window.location.href = '/register';  // Redirigir a la página de inicio
     }, 5000);  // Retraso de 3 segundos
-    toast.error('¡Error al registrar el usuario:', error);
+    toast.error('¡Error al registrar el usuario:' + error.response?.data?.error);
   });
 
 }
@@ -278,17 +276,17 @@ function captureImageLogin() {
 
   const dataURL = canvas.toDataURL('image/png'); // Captura la imagen como una cadena base64
 
-  const username = document.querySelector('[name="username"]').value;
+  const email = document.querySelector('[name="email"]').value;
 
-  // Verificar que el username no esté vacío
-  if (!username) {
-    toast.error('Por favor, ingresa tu nombre de usuario');
+  // Verificar que el email no esté vacío
+  if (!email) {
+    toast.error('Por favor, ingresa tu Email');
     return;
   }
 
   // Crear el objeto de datos a enviar
   const formData = {
-    username: username,  // Solo el nombre de usuario
+    email: email,  // Solo el nombre de usuario
     face_data: dataURL,  // Imagen en formato base64
   };
 
@@ -320,10 +318,10 @@ function captureImageLogin() {
 
 // Función para validar el nombre de usuario y proceder al siguiente tab
 export const validateAndNext = async () => {
-  const username = document.getElementById('username').value;
+  const email = document.getElementById('email').value;
   const blinkMessageError = document.getElementById('blinkMessageError');
 
-  if (username.trim() === '') {
+  if (email.trim() === '') {
     blinkMessageError.textContent = 'Por favor, diligencie el campo de usuario.';
     blinkMessageError.style.color = 'red';
     return false; // Si no está diligenciado, retornar false
@@ -335,13 +333,13 @@ export const validateAndNext = async () => {
 
     try {
       // Hacer una solicitud AJAX para verificar el nombre de usuario
-      const response = await fetch('http://127.0.0.1:8000/api/check-username/', {
+      const response = await fetch('http://127.0.0.1:8000/api/check-email/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'X-CSRFToken': csrfToken
         },
-        body: new URLSearchParams({ 'username': username })
+        body: new URLSearchParams({ 'email': email })
       });
 
       const data = await response.json();

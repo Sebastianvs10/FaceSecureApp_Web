@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los es
 
 export default function Login() {
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
   });
   const [activeTab, setActiveTab] = useState(1);
   const [blinkMessage, setBlinkMessage] = useState('');
@@ -76,12 +76,12 @@ export default function Login() {
 
           <div id="tab1" className={`tab-content ${activeTab === 1 ? 'tab-active' : ''}`}>
             <form onSubmit={(e) => e.preventDefault()}>
-              <label>Nombre de Usuario:</label>
+              <label>Correo Electrónico:</label>
               <input
                 type="text"
-                id="username"
-                name="username"
-                value={formData.username}
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 required
               />
