@@ -1,8 +1,10 @@
 import face_recognition as fr
-from deepface import DeepFace
-from typing import Tuple
 import cv2
 import numpy as np
+import dlib
+from deepface import DeepFace
+from typing import Tuple
+from imutils import face_utils
 from django.conf import settings
 
 class FaceMatcherModels:
@@ -69,66 +71,37 @@ class FaceMatcherModels:
 
     def face_matching_facenet_model(self, face_1: np.ndarray, face_2: np.ndarray) -> Tuple[bool, float]:
         try:
-            # Verificar que las imágenes no estén vacías o sean nulas
             if face_1 is None or face_2 is None:
                 raise ValueError("Las imágenes proporcionadas son nulas o vacías.")
-            # Mostrar las formas de las imágenes para depurar
-            print(f"Forma de face_1: {face_1.shape}, Forma de face_2: {face_2.shape}")
-            # Detectar el nivel de luminosidad de la imagen
-            if self.is_dark_image(face_1):
-                face_1 = self.enhance_image(face_1)  # Mejorar la imagen solo si es oscura
 
-            if self.is_dark_image(face_2):
-                face_2 = self.enhance_image(face_2)  # Mejorar la imagen solo si es oscura
+            # Preprocesamiento y alineación
+            face_1 = self.preprocess_image(face_1)
+            face_2 = self.preprocess_image(face_2)
+            face_1 = self.align_face(face_1)
+            face_2 = self.align_face(face_2)
 
-            # Detectar gafas en las imágenes y remover las áreas de los ojos si se detectan
-            if self.detect_glasses(face_1):
-                face_1 = self.remove_glasses_area(face_1)
+            # Ajuste por gafas o gorras
+            umbral_similitud = settings.UMBRAL_SIMILITUD
+            if self.detect_glasses(face_1) or self.detect_glasses(face_2):
+                umbral_similitud += 0.1  # Tolerancia extra
 
-            if self.detect_glasses(face_2):
-                face_2 = self.remove_glasses_area(face_2)
+            # Asegurarse de que estén en RGB
+            face_1 = cv2.cvtColor(face_1, cv2.COLOR_BGR2RGB)
+            face_2 = cv2.cvtColor(face_2, cv2.COLOR_BGR2RGB)
 
-            # Asegurarse de que las caras estén en formato RGB (DeepFace trabaja con RGB)
-            if face_1.shape[2] == 3 and face_2.shape[2] == 3:  # Verificar que las imágenes tengan 3 canales (RGB)
-                face_1 = cv2.cvtColor(face_1, cv2.COLOR_BGR2RGB)
-                face_2 = cv2.cvtColor(face_2, cv2.COLOR_BGR2RGB)
-            else:
-                raise ValueError("Las imágenes deben tener 3 canales (RGB)")
-
-            # Verificar si los tamaños de las caras son compatibles
+            # Redimensionar si es necesario
             if face_1.shape != face_2.shape:
-                print(f"Redimensionando imagen 2 de {face_2.shape} a {face_1.shape}")
-                # Redimensionar la imagen de la cara 2 para que coincida con la cara 1
                 face_2 = cv2.resize(face_2, (face_1.shape[1], face_1.shape[0]))
-            print("PASO AQUI")
-            # Usar DeepFace para verificar la similitud entre las dos caras
+
+            # Verificación con DeepFace
             result = DeepFace.verify(face_1, face_2, model_name=self.models[1])
+            matching = result['verified']
+            distance = result['distance']
+            print("Distancia", distance)
+            if distance < umbral_similitud:
+                return True, distance
+            return False, distance
 
-            print("RESULTADO:", result)
-
-            # Revisar si la verificación fue exitosa
-            if 'verified' in result:
-                matching = result['verified']
-                distance = result['distance']
-                print(f"Coincidencia: {matching}, Distancia: {distance}")
-
-                # Ajustar el umbral: si la distancia es mayor que un umbral específico, consideramos que no hay coincidencia
-                umbral_similitud = settings.UMBRAL_SIMILITUD # Puedes ajustar este umbral a tu necesidad
-                if distance < umbral_similitud:
-                    return True, distance  # Coincidencia
-                else:
-                    return False, distance  # No coincidencia debido a la alta distancia
-
-            else:
-                print("Error: No se pudo obtener la coincidencia de las caras.")
-                return False, 0.0
-
-        except ValueError as ve:
-            print(f"Error de valor: {ve}")
-            return False, 0.0
-        except cv2.error as ce:
-            print(f"Error en OpenCV: {ce}")
-            return False, 0.0
         except Exception as e:
             print(f"Error en face_matching_facenet_model: {e}")
             return False, 0.0
@@ -249,3 +222,66 @@ class FaceMatcherModels:
         # Ajustar brillo y contraste
         adjusted_image = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
         return adjusted_image
+
+    def preprocess_image(self, image: np.ndarray) -> np.ndarray:
+        # Convertir a escala de grises para ecualización
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        gray = cv2.equalizeHist(gray)
+        # Aplicar suavizado para reducir reflejos o ruido
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+        # Reconstruir imagen en RGB
+        image = cv2.cvtColor(blurred, cv2.COLOR_GRAY2RGB)
+        return image
+
+    def align_face(self, image: np.ndarray) -> np.ndarray:
+        # Ruta al archivo del predictor (ajusta según tu sistema)
+        predictor_path = "D:/LocalProyecto/Local-FaceSecureApp/backend/process/face_processing/face_matcher_models/shape_predictor_68_face_landmarks.dat"  # Si está en el mismo directorio
+
+        # Inicializar detector y predictor
+        detector = dlib.get_frontal_face_detector()
+        try:
+            predictor = dlib.shape_predictor(predictor_path)
+        except RuntimeError as e:
+            print(f"Error al cargar el predictor: {e}. Verifica la ruta: {predictor_path}")
+            return image  # Si falla, devuelve la imagen sin alinear
+
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        rects = detector(gray, 1)
+
+        if len(rects) == 0:
+            print("No se detectaron rostros para alinear.")
+            return image
+
+        # Tomar el primer rostro detectado
+        rect = rects[0]
+        shape = predictor(gray, rect)
+        shape = face_utils.shape_to_np(shape)
+
+        # Extraer coordenadas de los ojos (índices típicos para 68 landmarks: 36-41 para ojo izquierdo, 42-47 para ojo derecho)
+        left_eye = shape[36:42].mean(axis=0)  # Centro del ojo izquierdo
+        right_eye = shape[42:48].mean(axis=0)  # Centro del ojo derecho
+
+        # Calcular el ángulo de rotación entre los ojos
+        dY = right_eye[1] - left_eye[1]
+        dX = right_eye[0] - left_eye[0]
+        angle = np.degrees(np.arctan2(dY, dX))  # Ángulo en grados
+
+        # Calcular el centro de los ojos (punto de rotación)
+        eyes_center = ((left_eye[0] + right_eye[0]) // 2, (left_eye[1] + right_eye[1]) // 2)
+
+        # Tamaño deseado entre los ojos (puedes ajustar este valor)
+        desired_eye_distance = 0.35  # Proporción del ancho de la imagen
+        current_eye_distance = np.sqrt(dX ** 2 + dY ** 2)
+        scale = (desired_eye_distance * image.shape[1]) / current_eye_distance
+
+        # Obtener la matriz de transformación (rotación + escala)
+        M = cv2.getRotationMatrix2D(eyes_center, angle, scale)
+
+        # Ajustar la traslación para centrar la imagen
+        M[0, 2] += (image.shape[1] * 0.5 - eyes_center[0])
+        M[1, 2] += (image.shape[0] * 0.25 - eyes_center[1])  # Ajustar verticalmente
+
+        # Aplicar la transformación
+        aligned_image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]), flags=cv2.INTER_CUBIC)
+
+        return aligned_image

@@ -32,7 +32,6 @@ class UserRegistrationAPIView(GenericAPIView):
         # Obtener los datos de la solicitud
         image_data = request.data.get('face_data')  # Asegúrate de que 'face_data' sea el campo enviado
         email = request.data.get('email')
-        username = request.data.get('email')
         name_user = request.data.get('name_user')
         password = request.data.get('password')  # Suponiendo que usas 'password' para la contraseña
         user_code = request.data.get('user_code')

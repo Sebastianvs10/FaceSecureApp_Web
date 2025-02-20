@@ -37,15 +37,6 @@ class FaceSignUp:
             # Step 7: Face crop
             face_crop = self.face_utilities.face_crop(face_save, face_bbox)
 
-            # Step 8: Read existing faces from the database
-            existing_faces, face_names, names_user, face_codes, _ = self.face_utilities.read_face_database()
-
-            # Step 9: Check for identical faces
-            match_found, email = self.face_utilities.face_matching2(face_crop, existing_faces, face_names)
-
-            if match_found:
-                return face_image, False, f'¡El rostro ya está registrado con el correo {email}!'
-
             # Step 10: Save face data
             check_save_image, message = self.face_utilities.save_face_data(face_crop, user_code, name_user_input, password, email)
             if check_save_image:

@@ -17,9 +17,10 @@ export default function Register() {
   const [passwordError, setPasswordError] = useState(''); // Para manejar el mensaje de error de contraseñas
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: name === 'email' ? value.toLowerCase() : value, // Convertir solo email a minúsculas
     });
   };
 

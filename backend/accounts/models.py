@@ -8,8 +8,11 @@ class CustomUser(AbstractUser):
     face_data = models.BinaryField(null=True, blank=True)  # Registro facial en formato binario
     role = models.CharField(max_length=10, choices=[('Admin', 'Administrador'), ('User', 'Usuario')], default='User')  # Rol del usuario
 
+    # Redefinir username como opcional
+    username = models.CharField(max_length=150, unique=True, null=True, blank=True)
+
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "user_code", "name_user", "face_data"]  # Campos requeridos al crear el usuario
+    REQUIRED_FIELDS = ["user_code", "name_user", "face_data"]  # Campos requeridos al crear el usuario
 
     def __str__(self) -> str:
         return self.email

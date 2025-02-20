@@ -87,14 +87,10 @@ class FaceUtils:
             _, buffer = cv2.imencode('.png', face_crop)  # Cambia el formato según necesites
             img_data = buffer.tobytes()
 
-            # Validación del correo electrónico
-            if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-                return False, "El correo electrónico no es válido."
-
             # Verificar si el correo ya está registrado
             if CustomUser.objects.filter(email=email).exists():
                 return False, "Este correo electrónico ya está registrado."
-
+            print("Email", email)
             # Guardar en la base de datos
             try:
                 # Encriptar la imagen
@@ -104,16 +100,17 @@ class FaceUtils:
 
                 # Crear un nuevo usuario
                 user = CustomUser(
-                    username=email,
                     email=email,
+                    username=email,
                     user_code=user_code,
                     name_user=name_user,
                     face_data=encrypted_image_data,
                     password=encrypted_password
                 )
+                print("USER", user.username)
                 user.full_clean()  # Verifica que los datos sean válidos antes de guardar
                 user.save()
-
+                print("LLego")
                 # Enviar un correo de confirmación
                 params = {
                     "from": "FaceSecure <onboarding@facesecure.online>",
@@ -195,7 +192,7 @@ class FaceUtils:
                     </html>
                     """
                 }
-
+                print("LLEGO 2")
                 # Configura la clave API de Resend
                 resend.api_key = "re_UMJQeZGM_Kq1WvnBDoEYHqTx7GjTpbZsc"
                 resend.ApiKeys.list()

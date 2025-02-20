@@ -57,7 +57,6 @@ class UserLoginSerializer(serializers.Serializer):
 
 class EmailValidationSerializer(serializers.Serializer):
     email = serializers.CharField(max_length=150)
-
     def validate_email(self, value):
         if CustomUser.objects.filter(email=value).exists():
             return value

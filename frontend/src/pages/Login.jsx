@@ -30,11 +30,12 @@ export default function Login() {
     setActiveTab(1); // Volver a la primera pestaña
   };
 
-  // Manejar el cambio en el input del formulario
+  // Manejar el cambio en el input del formulario y convertir email a minúsculas
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: name === 'email' ? value.toLowerCase() : value, // Convertir solo email a minúsculas
     });
   };
 

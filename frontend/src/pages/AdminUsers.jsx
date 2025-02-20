@@ -63,11 +63,12 @@ const AdminUsers = () => {
         headers: config.headers,
         params: { page: page, limit: 7 },
       });
+      console.log(response.data.results)
       // Verifica si la respuesta contiene 'results' y 'count'
       if (response.data.results && Array.isArray(response.data.results)) {
         setUsers(response.data.results);  // Establecer los usuarios de la página
          setTotalUsers(response.data.count);
-        setTotalPages(Math.ceil(response.data.count / 10));  // Calcular el total de páginas
+        setTotalPages(Math.ceil(response.data.count / 7));  // Calcular el total de páginas
       } else {
         setUsers([]);  // Si la respuesta no tiene 'results', establecer users vacío
       }
@@ -219,8 +220,8 @@ const fetchUserInfo = (userId) => {
             <div className="modal-flex">
               <div className="modal-left">
                 <div className="modal-field">
-                  <label htmlFor="modalUserName">Usuario o Correo Electrónico:</label>
-                  <input type="text" id="modalUserName" className="modal-text" value={userInfo.username} readOnly />
+                  <label htmlFor="modalUserName">Usuario/Correo Electrónico:</label>
+                  <input type="text" id="modalUserName" className="modal-text" value={userInfo.email} readOnly />
                 </div>
 
                 <div className="modal-field">
