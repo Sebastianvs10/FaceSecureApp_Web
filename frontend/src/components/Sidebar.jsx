@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Sidebar = ({ role }) => {
+const Sidebar = ({ role, onToggleAccesos }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Maneja la expansión y compresión del sidebar
@@ -22,6 +22,10 @@ const Sidebar = ({ role }) => {
             {isSidebarOpen && <span>Gestionar usuarios</span>} {/* Mostrar texto solo cuando el sidebar está abierto */}
           </a>
         )}
+        <a href="/access" onClick={onToggleAccesos}>
+          <i className="fa-solid fa-key"></i>
+          {isSidebarOpen && <span>Accesos</span>} {/* Mostrar texto solo cuando el sidebar está abierto */}
+        </a>
       </div>
     </nav>
   );

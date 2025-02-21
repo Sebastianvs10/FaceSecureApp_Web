@@ -418,7 +418,7 @@ table, th, td {
 }
 
 th, td {
-    padding: 12px; /* Mayor padding para más espacio */
+    padding: 10px; /* Mayor padding para más espacio */
     text-align: center;
     color: #000; /* Color del texto negro */
     word-wrap: break-word; /* Evita desbordamientos por contenido largo */
@@ -426,7 +426,7 @@ th, td {
 
 
 th {
-    background-color: #0710bd; /* Color de fondo de los encabezados */
+    background-color: #d24410; /* Color de fondo de los encabezados */
     color: #fff; /* Texto blanco en encabezados */
     text-transform: uppercase; /* Texto en mayúsculas */
     letter-spacing: 1px; /* Espaciado entre letras */
@@ -499,10 +499,10 @@ th, td {
 }
 
 .modal-right {
-    max-height: 460px; /* Ajusta este valor según tus necesidades */
+    max-height: 500px; /* Ajusta este valor según tus necesidades */
     overflow-y: auto;  /* Habilita el scroll vertical */
     padding-right: 10px; /* Para evitar que el contenido se pegue al borde */
-    max-width: 60vh; /* Limitar el ancho de la sección de trazabilidad */
+    max-width: 50vh; /* Limitar el ancho de la sección de trazabilidad */
 }
 .close {
     color: #aaa;
@@ -636,17 +636,22 @@ th, td {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #4CAF50; /* Fondo verde */
-  color: white;
+  background-color: #b3b8cc; /* Fondo verde */
+  color: rgba(0, 0, 0, 0.84);
   font-weight: bold;
   font-size: 18px;
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.info_user{
+    color: #000000;
+    margin-left: 4px;
+    margin-bottom: 10px;
+}
 
 .initials:hover {
-  background-color: #45a049; /* Color ligeramente más oscuro cuando se pasa el cursor */
+  background-color: #d24410; /* Color ligeramente más oscuro cuando se pasa el cursor */
 }
 
 /* Estilos para el dropdown */
@@ -654,7 +659,7 @@ th, td {
   position: absolute;
   top: 50px; /* Ajusta según sea necesario */
   right: 0;
-  background-color: rgba(179, 184, 204, 0.57);
+  background-color: rgba(228, 233, 238, 0.79);
   border: none;
   border-radius: 5px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -673,13 +678,16 @@ th, td {
   display: block;
   padding: 8px 0;
   text-decoration: none;
-  color: #000d4b;
+  color: #000000;
   border-radius: 5px;
   font-size: 16px;
 }
 
 .dropdown a:hover {
-  background-color: #adaaaa;
+  background-color: rgba(26, 26, 26, 0.59);
+}
+.name_user{
+    color: black;
 }
 
 /*Account User*/
@@ -782,4 +790,111 @@ span {
   font-weight: bold;
     color: rgba(0, 0, 0, 0.56);
 }
+
+/* Estilo para el botón flotante */
+.instructions-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  background-color: rgba(12, 170, 0, 0);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 999;
+  width: 80px;
+    height: 80px;
+
+}
+
+.instructions-btn:hover {
+  background-color: rgba(26, 26, 26, 0.44);
+}
+
+/* Estilo para las instrucciones flotantes */
+.side-info {
+  position: fixed;
+  top: 55%;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 450px;
+  font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.instructions-btn:hover + .side-info {
+  display: block;
+}
+
+.side-info h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.side-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.side-info ul li {
+  margin-bottom: 8px;
+}
+
+.side-info ul li i {
+  color: #28a745;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+
+/* Estilo para el contenedor de los gráficos */
+.container-grahp {
+  width: 100%;
+  background: rgba(179, 184, 204, 0.66);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.statistic-tabs {
+  margin-bottom: 20px;
+}
+
+.statistic-tabs button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #b90e2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.statistic-tabs button:hover {
+  background-color: #5a6268;
+}
+
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.grid-item {
+  width: 100%;
+  height: 300px;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 

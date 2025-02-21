@@ -15,8 +15,10 @@
     "@mediapipe/face_mesh": "^0.4.1633559619",
     "@mediapipe/objectron": "^0.4.1675468480",
     "axios": "^1.6.8",
+    "chart.js": "^4.4.8",
     "clmtrackr": "^1.1.2",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.6"

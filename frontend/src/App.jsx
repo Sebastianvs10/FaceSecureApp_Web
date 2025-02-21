@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Login from './pages/Login'
 import Index from './pages/Index'
 import AdminUsers from "./pages/AdminUsers.jsx";
+import AccessUser from "./pages/AccessUser.jsx"
 import '@fortawesome/fontawesome-free/css/all.css';
 import AccountUser from "./pages/accountUser.jsx";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="adminusers" element={<AdminUsers />} />
           <Route path="account" element={<AccountUser />} />
+          <Route path="access" element={<AccessUser />} />
         </Route>
       </Routes>
       {/* Configura el ToastContainer para mostrar los Toasts en la parte inferior derecha */}

@@ -77,12 +77,14 @@ class FaceMatcherModels:
             # Preprocesamiento y alineación
             face_1 = self.preprocess_image(face_1)
             face_2 = self.preprocess_image(face_2)
+
             face_1 = self.align_face(face_1)
             face_2 = self.align_face(face_2)
 
             # Ajuste por gafas o gorras
             umbral_similitud = settings.UMBRAL_SIMILITUD
             if self.detect_glasses(face_1) or self.detect_glasses(face_2):
+
                 umbral_similitud += 0.1  # Tolerancia extra
 
             # Asegurarse de que estén en RGB
@@ -95,11 +97,11 @@ class FaceMatcherModels:
 
             # Verificación con DeepFace
             result = DeepFace.verify(face_1, face_2, model_name=self.models[1])
+            print("RESULTADO", result)
             matching = result['verified']
             distance = result['distance']
-            print("Distancia", distance)
             if distance < umbral_similitud:
-                return True, distance
+                return matching, distance
             return False, distance
 
         except Exception as e:

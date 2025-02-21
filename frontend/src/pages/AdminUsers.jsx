@@ -243,8 +243,9 @@ const fetchUserInfo = (userId) => {
               </div>
 
               <div>
-                <h3>Trazabilidad de Acceso</h3>
+
                 <div className="modal-right">
+                  <h3>Trazabilidad de Acceso</h3>
                   <table id="accessLogTable">
                     <thead>
                       <tr>
