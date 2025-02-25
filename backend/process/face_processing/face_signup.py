@@ -1,7 +1,6 @@
-import numpy as np
 from typing import Tuple
 
-from rest_framework import request
+import numpy as np
 
 from ..face_processing.face_utils import FaceUtils
 

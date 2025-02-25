@@ -1,6 +1,4 @@
 import numpy as np
-import resend
-from rest_framework import request
 
 from ..face_processing.face_utils import FaceUtils
 

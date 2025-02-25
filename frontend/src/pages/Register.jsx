@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../index.css';
-import { initializeCamera } from '../js/FaceRecognitionFunctions';
+import {initializeCamera} from '../js/FaceRecognitionFunctions';
 
 export default function Register() {
   const [formData, setFormData] = useState({

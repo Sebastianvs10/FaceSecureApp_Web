@@ -1,12 +1,12 @@
-  import * as faceMesh from '@mediapipe/face_mesh';
-  import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-  import { FACEMESH_TESSELATION } from "@mediapipe/face_mesh";
-  import axios from "axios";
-  import { toast} from 'react-toastify';  // Importa las funcionalidades de Toastify
-  import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los estilos de Toastify
+import * as faceMesh from '@mediapipe/face_mesh';
+import {FACEMESH_TESSELATION} from '@mediapipe/face_mesh';
+import {drawConnectors} from '@mediapipe/drawing_utils';
+import axios from "axios";
+import {toast} from 'react-toastify'; // Importa las funcionalidades de Toastify
+import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los estilos de Toastify
 
 
-  // Variables de estado
+// Variables de estado
   let video = null;
   let canvas = null;
   let blinkCount = 0;

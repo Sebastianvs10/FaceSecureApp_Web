@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import Header from '../components/Header.jsx';
 import Sidebar from '../components/Sidebar.jsx';
-import { useNavigate } from 'react-router-dom'; // Importar hook de redirección
+import {useNavigate} from 'react-router-dom'; // Importar hook de redirección
 
 export default function Home() {
   const [name_user, setUsername] = useState('');

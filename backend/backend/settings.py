@@ -10,9 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+
 import environ
+
 # Inicializa el entorno
 env = environ.Env()
 environ.Env.read_env()  # Lee el archivo .env
@@ -89,8 +91,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-import os
 
 DATABASES = {
     'default': {

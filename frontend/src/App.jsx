@@ -1,6 +1,6 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {ToastContainer} from 'react-toastify';
 import Home from "./pages/Home"
 import Layout from './pages/Layout';
 import Register from './pages/Register';

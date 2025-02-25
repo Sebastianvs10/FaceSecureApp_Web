@@ -1,7 +1,8 @@
-import numpy as np
-import mediapipe as mp
-import cv2
 from typing import Any, List, Tuple
+
+import cv2
+import mediapipe as mp
+import numpy as np
 
 
 class FaceMeshMediapipe:

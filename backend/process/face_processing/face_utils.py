@@ -1,21 +1,18 @@
-import os
-
-import numpy as np
-import cv2
-import re
-import datetime
-import resend
 from typing import List, Tuple, Any
 
-from django.utils import timezone
-from pydantic import ValidationError
+import cv2
+import numpy as np
+import resend
+from accounts.models import CustomUser, AccessLog
 from cryptography.fernet import Fernet
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
+from django.utils import timezone
+from pydantic import ValidationError
+
 from ..face_processing.face_detect_models.face_detect import FaceDetectMediapipe
-from ..face_processing.face_mesh_models.face_mesh import FaceMeshMediapipe
 from ..face_processing.face_matcher_models.face_matcher import FaceMatcherModels
-from accounts.models import CustomUser,AccessLog
+from ..face_processing.face_mesh_models.face_mesh import FaceMeshMediapipe
 
 
 class FaceUtils:

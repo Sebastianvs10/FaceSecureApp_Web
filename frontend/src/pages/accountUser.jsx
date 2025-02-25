@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { getUserInfo } from '../js/userService.js';
+import {useNavigate} from 'react-router-dom';
+import {toast} from 'react-toastify';
+import {getUserInfo} from '../js/userService.js';
 import Header from "../components/Header.jsx";
-import Sidebar from "../components/Sidebar.jsx";  // Importa el servicio
+import Sidebar from "../components/Sidebar.jsx"; // Importa el servicio
 
 const AccountUser = () => {
   const [userData, setUserData] = useState(null);

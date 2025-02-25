@@ -1,12 +1,14 @@
-import face_recognition as fr
-import cv2
 import os
-import numpy as np
-import dlib
-from deepface import DeepFace
 from typing import Tuple
-from imutils import face_utils
+
+import cv2
+import dlib
+import face_recognition as fr
+import numpy as np
+from deepface import DeepFace
 from django.conf import settings
+from imutils import face_utils
+
 
 class FaceMatcherModels:
     def __init__(self):

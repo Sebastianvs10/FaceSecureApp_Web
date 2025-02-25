@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const Sidebar = ({ role, onToggleAccesos }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

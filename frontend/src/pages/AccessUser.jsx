@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify';
+import {useNavigate} from 'react-router-dom';
 import Header from "../components/Header.jsx";
 import Sidebar from "../components/Sidebar.jsx";
 import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  PointElement,
   ArcElement,
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  Legend,
+  LinearScale,
   LineController,
+  LineElement,
   PieController,
-  BarController
+  PointElement,
+  Title,
+  Tooltip
 } from 'chart.js';
 
 // Registra los componentes necesarios de Chart.js

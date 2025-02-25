@@ -1,27 +1,25 @@
 # Importa las bibliotecas necesarias para el reconocimiento facial
-import cv2
 import base64
-import numpy as np
 
-from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView, RetrieveAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.pagination import PageNumberPagination
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.hashers import check_password  # Para verificar la contraseña
-from .serializers import *
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.response import Response
-from rest_framework import status
+import cv2
+import numpy as np
+from accounts.models import CustomUser, AccessLog
 from cryptography.fernet import Fernet
 from django.conf import settings
-from process.face_processing.face_signup import FaceSignUp
+from django.http import JsonResponse
 from process.face_processing.face_login import FaceLogIn
+from process.face_processing.face_signup import FaceSignUp
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.generics import GenericAPIView, RetrieveAPIView
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from .serializers import *
 from .tokens import AccessToken
-from accounts.models import CustomUser,AccessLog
 
 
 class UserRegistrationAPIView(GenericAPIView):

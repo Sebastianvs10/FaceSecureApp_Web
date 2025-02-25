@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, {useEffect, useState} from "react";
 import '../index.css';
-import { initializeCamera, validateAndNext } from "../js/FaceRecognitionFunctions.js";
-import { toast } from 'react-toastify';
+import {initializeCamera, validateAndNext} from "../js/FaceRecognitionFunctions.js";
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
