@@ -251,6 +251,12 @@ import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los es
       user_code: document.querySelector('[name="user_code"]').value,
       face_data: dataURL, // Agregar la imagen en formato base64
     };
+    // Mostrar el loader cuando se inicie el proceso
+    document.getElementById('loadingOverlay').style.display = 'flex';
+    // Detener el video después de capturar la imagen
+    video.pause();  // Pausa el video
+    video.srcObject.getTracks().forEach(track => track.stop());  // Detiene todas las pistas de la cámara
+        
     // Enviar los datos a la API
     axios.post('http://127.0.0.1:8000/api/register/', formData)
     .then((response) => {
@@ -260,14 +266,18 @@ import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los es
         window.location.href = '/';  // Redirigir a la página de inicio
       }, 2000);  // Retraso de 2 segundos
       toast.success('¡Usuario registrado exitosamente!');
+      document.getElementById('loadingOverlay').style.display = 'none';
     })
     .catch((error) => {
       console.error('Error al enviar los datos:' + error.response?.data?.error);
       // Redirigir al usuario después de 3 segundos si hay un error
       setTimeout(() => {
+        document.getElementById('loadingOverlay').style.display = 'none';
         window.location.href = '/register';  // Redirigir a la página de inicio
-      }, 5000);  // Retraso de 3 segundos
+      }, 2000);  // Retraso de 3 segundos
+      document.getElementById('loadingOverlay').style.display = 'none';
       toast.error('¡Error al registrar el usuario:' + error.response?.data?.error);
+
     });
 
   }

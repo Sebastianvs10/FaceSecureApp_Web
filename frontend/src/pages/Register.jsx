@@ -150,6 +150,10 @@ export default function Register() {
               <canvas id="canvas"></canvas>
             </div>
           </div>
+            {/* Aquí es donde aparece el loader */}
+          <div id="loadingOverlay" className="loading-overlay">
+            <div className="loader">  </div>
+          </div>
 
           <div className="tab-buttons">
             {activeTab === 2 && (
