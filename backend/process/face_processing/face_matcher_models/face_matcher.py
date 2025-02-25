@@ -1,5 +1,6 @@
 import face_recognition as fr
 import cv2
+import os
 import numpy as np
 import dlib
 from deepface import DeepFace
@@ -237,7 +238,7 @@ class FaceMatcherModels:
 
     def align_face(self, image: np.ndarray) -> np.ndarray:
         # Ruta al archivo del predictor (ajusta según tu sistema)
-        predictor_path = "D:/LocalProyecto/Local-FaceSecureApp/backend/process/face_processing/face_matcher_models/shape_predictor_68_face_landmarks.dat"  # Si está en el mismo directorio
+        predictor_path = os.path.join(os.getcwd(), "shape_predictor_68_face_landmarks.dat")
 
         # Inicializar detector y predictor
         detector = dlib.get_frontal_face_detector()
@@ -251,7 +252,7 @@ class FaceMatcherModels:
         rects = detector(gray, 1)
 
         if len(rects) == 0:
-            print("No se detectaron rostros para alinear.")
+            print(" No se detectaron rostros para alinear.")
             return image
 
         # Tomar el primer rostro detectado

@@ -13,6 +13,7 @@ export default function Login() {
   const [blinkMessage, setBlinkMessage] = useState('');
   const [showInstructions, setShowInstructions] = useState(false); // Estado para controlar las instrucciones
   const [instructionsVisible, setInstructionsVisible] = useState(false); // Estado para controlar la visibilidad de las instrucciones
+  const [loading, setLoading] = useState(false);
 
   // Cambiar a la siguiente pestaña y ejecutar la validación
   const nextTab = async () => {
@@ -21,7 +22,9 @@ export default function Login() {
 
     if (isValid.success) { // Solo cambiar a la siguiente pestaña si la validación es exitosa
       setActiveTab(2); // Cambiar a la segunda pestaña
+
       initializeCamera(); // Inicializar la cámara
+       setLoading(true);
     } else {
       toast.error(isValid.message);
     }
@@ -40,26 +43,6 @@ export default function Login() {
     });
   };
 
-  // Enviar el formulario (Login)
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login/", formData);
-      console.log("Success!", response.data);
-      localStorage.setItem("accessToken", response.data.tokens.access);
-      localStorage.setItem("refreshToken", response.data.tokens.refresh);
-    } catch (error) {
-      console.log("Error during Login!", error.response?.data);
-      if (error.response && error.response.data) {
-        Object.keys(error.response.data).forEach(field => {
-          const errorMessages = error.response.data[field];
-          if (errorMessages && errorMessages.length > 0) {
-            // Aquí puedes manejar los errores específicos de cada campo si es necesario
-          }
-        });
-      }
-    }
-  };
 
   // Mostrar instrucciones por un tiempo al cargar la página
   useEffect(() => {
@@ -116,6 +99,11 @@ export default function Login() {
             </div>
           </div>
 
+           {/* Aquí es donde aparece el loader */}
+          <div id="loadingOverlay" className="loading-overlay">
+            <div className="loader">  </div>
+          </div>
+
           <div className="tab-buttons">
             {activeTab === 2 && (
               <button className="btn-primary" type="button" onClick={previousTab}>
@@ -131,6 +119,7 @@ export default function Login() {
               </button>
             )}
           </div>
+
           <div className="registration-prompt">
             <label>Aún no tienes cuenta? <a href="/register" className="link_register">¡Crea una aquí!</a></label>
           </div >
@@ -159,6 +148,11 @@ export default function Login() {
           <li><i className="fas fa-check-circle"></i> Parpadea tres veces de manera clara para completar la autenticación correctamente.</li>
           <li><i className="fas fa-check-circle"></i> Evita movimientos rápidos o cambios en la iluminación mientras te autenticas.</li>
         </ul>
+      </div>
+
+       {/* Mostrar el loader si está cargando */}
+      <div id="loader" className="loader-container" style={{ display: 'none' }}>
+        <div className="loader">Verificando la información  </div>
       </div>
     </div>
   );
