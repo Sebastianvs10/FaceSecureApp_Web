@@ -1,3 +1,7 @@
+# Autor: Jhohan Sebastian Vargas S
+# Fecha: 2025-02-25
+# Project: FaceSecureApp
+
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 

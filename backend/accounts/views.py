@@ -1,3 +1,7 @@
+# Autor: Jhohan Sebastian Vargas S
+# Fecha: 2025-02-25
+# Project: FaceSecureApp
+
 # Importa las bibliotecas necesarias para el reconocimiento facial
 import base64
 

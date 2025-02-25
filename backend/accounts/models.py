@@ -1,7 +1,12 @@
+# Autor: Jhohan Sebastian Vargas S
+# Fecha: 2025-02-25
+# Project: FaceSecureApp
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-
+# Autor: Jhohan Sebastian Vargas
+# Project: FaceSecureApp
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     user_code = models.CharField(max_length=100, unique=True)  # Código del usuario

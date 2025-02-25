@@ -1,3 +1,7 @@
+# Autor: Jhohan Sebastian Vargas S
+# Fecha: 2025-02-25
+# Project: FaceSecureApp
+
 import numpy as np
 
 from ..face_processing.face_utils import FaceUtils

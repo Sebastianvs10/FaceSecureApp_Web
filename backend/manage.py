@@ -1,3 +1,7 @@
+# Autor: Jhohan Sebastian Vargas S
+# Fecha: 2025-02-25
+# Project: FaceSecureApp
+
 #!/usr/bin/env python
 import os
 import sys

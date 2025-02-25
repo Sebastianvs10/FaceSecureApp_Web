@@ -1,3 +1,7 @@
+# Autor: Jhohan Sebastian Vargas S
+# Fecha: 2025-02-25
+# Project: FaceSecureApp
+
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 
