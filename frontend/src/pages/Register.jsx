@@ -31,15 +31,35 @@ export default function Register() {
     });
   };
 
-  const nextTab = () => {
+ const nextTab = () => {
+    // Si algún campo está vacío, mostrar un mensaje
+    if (!formData.email || !formData.password1 || !formData.password2 || !formData.user_code || !formData.name_user) {
+      setBlinkMessage('Por favor, completa todos los campos.');
+      return; // No cambiar de tab si hay campos vacíos
+    }
+
+    // Validar que el email tenga formato correcto
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setBlinkMessage('Por favor, ingresa un email válido.');
+      return; // No cambiar de tab si el email no es válido
+    }
+
+    // Validar que las contraseñas coincidan
     if (formData.password1 !== formData.password2) {
       setPasswordError('Las contraseñas no coinciden. Intenta nuevamente.');
-      return;
+      setBlinkMessage('');
+      return; // No cambiar de tab si las contraseñas no coinciden
     }
-    setPasswordError('');
+
+    setPasswordError(''); // Limpiar mensaje de error si las contraseñas coinciden
+    setBlinkMessage(''); // Limpiar mensaje de advertencia
+
+    // Si todo está correcto, pasar al siguiente tab
     setActiveTab(2);
     initializeCamera();
   };
+
 
   const previousTab = () => {
     setActiveTab(1);
