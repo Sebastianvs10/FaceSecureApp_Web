@@ -1,3 +1,8 @@
+﻿/* Autor: Jhohan Sebastian Vargas S
+   // Fecha: 2025-02-25
+   # Project: FaceSecureApp
+*/
+
 import React, {useEffect, useRef, useState} from 'react';
 
 const Header = ({ name_user, role, onLogout, onToggleSidebar }) => {

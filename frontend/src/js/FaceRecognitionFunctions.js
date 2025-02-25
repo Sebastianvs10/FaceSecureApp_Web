@@ -1,3 +1,8 @@
+﻿/* Autor: Jhohan Sebastian Vargas S
+   // Fecha: 2025-02-25
+   # Project: FaceSecureApp
+*/
+
 import * as faceMesh from '@mediapipe/face_mesh';
 import {FACEMESH_TESSELATION} from '@mediapipe/face_mesh';
 import {drawConnectors} from '@mediapipe/drawing_utils';

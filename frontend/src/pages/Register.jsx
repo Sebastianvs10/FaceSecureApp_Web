@@ -1,3 +1,8 @@
+﻿/* Autor: Jhohan Sebastian Vargas S
+   // Fecha: 2025-02-25
+   # Project: FaceSecureApp
+*/
+
 import React, {useEffect, useState} from 'react';
 import '../index.css';
 import {initializeCamera} from '../js/FaceRecognitionFunctions';

@@ -1,3 +1,8 @@
+﻿/* Autor: Jhohan Sebastian Vargas S
+   // Fecha: 2025-02-25
+   # Project: FaceSecureApp
+*/
+
 import axios from 'axios';
 
 // Servicio reutilizable para obtener la información del usuario
