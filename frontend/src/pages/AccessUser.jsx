@@ -201,29 +201,6 @@ const AccessUser = () => {
           },
         });
       }
-
-      if (activeTab === 'loginDetails' && pieChartRef.current) {
-        const pieCtx = pieChartRef.current.getContext('2d');
-        window.pieChartInstance = new Chart(pieCtx, {
-          type: 'pie',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Distancia Promedio por Día',
-              data: avgDistances,
-              backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-              borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)'],
-              borderWidth: 1,
-            }],
-          },
-          options: {
-            plugins: {
-              title: { display: true, text: 'Detalles de Acceso' },
-            },
-            responsive: true,
-          },
-        });
-      }
     }
   }, [accessData, activeTab]);
 
@@ -268,7 +245,6 @@ const AccessUser = () => {
         <div className="statistic-tabs">
           <button onClick={() => handleTabClick('distance')}>Distancia Promedio</button>
           <button onClick={() => handleTabClick('accesses')}>Número de Accesos</button>
-          <button onClick={() => handleTabClick('loginDetails')}>Detalles de Acceso</button>
         </div>
 
         {loading ? (
