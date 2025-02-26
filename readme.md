@@ -37,7 +37,7 @@ Asegúrate de tener los siguientes requisitos instalados en tu máquina:
 Primero, clona el repositorio desde GitHub:
 
 ```bash
-git clone https://github.com/Sebastianvs10/FaceSecureAp_Web
+git clone https://github.com/Sebastianvs10/FaceSecureApp_Web
 ```
 ### 2. 📂 Navegar a la carpeta del proyecto
 
