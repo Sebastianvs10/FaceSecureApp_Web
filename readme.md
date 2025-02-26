@@ -43,7 +43,7 @@ git clone https://github.com/Sebastianvs10/FaceSecureAp_Web
 
 Accede al directorio del proyecto clonado:
 ```bash
-cd FaceSecureAp_Web
+cd FaceSecureApp_Web
 ```
 
 ### 3. 🛠️ Configurar la base de datos PostgreSQL
