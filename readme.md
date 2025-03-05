@@ -24,10 +24,10 @@ El proyecto permite que los usuarios se registren utilizando su rostro y autenti
 
 Asegúrate de tener los siguientes requisitos instalados en tu máquina:
 
-- [🐍 Python 3.8+](https://www.python.org/downloads/)
+- [🐍 Python 3.10](https://www.python.org/downloads/)
 - [🔧 Node.js](https://nodejs.org/) (preferiblemente la versión LTS).
 - [📦 npm](https://www.npmjs.com/) o [🧶 yarn](https://yarnpkg.com/) para el frontend.
-- [📚 PostgreSQL](https://www.postgresql.org/) instalado y en funcionamiento.
+- [📚 PostgreSQL 14](https://www.postgresql.org/) instalado y en funcionamiento.
 - [🌐 Django](https://www.djangoproject.com/) y [Django REST Framework](https://www.django-rest-framework.org/) para el backend.
 
 ## 🚀 Pasos para ejecutar el proyecto

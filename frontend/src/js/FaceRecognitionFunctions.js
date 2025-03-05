@@ -111,7 +111,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Asegúrate de importar los es
   // Función para iniciar la secuencia de parpadeos
   function startBlinkSequence() {
     blinkCount = 0;
-    document.getElementById('blinkMessage').textContent = `Por favor, parpadea`;
+    document.getElementById('blinkMessage').textContent = `¡Parpadea 3 veces!`;
     waitingForBlink = true; // Esperar el primer parpadeo
   }
 
